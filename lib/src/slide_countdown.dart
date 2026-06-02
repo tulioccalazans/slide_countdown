@@ -47,6 +47,7 @@ class SlideCountdown extends SlideCountdownBase {
     super.shouldShowHours,
     super.shouldShowMinutes,
     super.shouldShowSeconds,
+    super.shouldShowMilliseconds,
     super.slideAnimationDuration,
     super.slideAnimationCurve,
   });
@@ -80,6 +81,9 @@ class _SlideCountdownState extends State<SlideCountdown> {
           config: StreamDurationConfig(
             isCountUp: widget.countUp,
             onDone: widget.onDone,
+            periodic: (widget.shouldShowMilliseconds != null)
+                ? const Duration(milliseconds: 70)
+                : const Duration(seconds: 1),
             countDownConfig: CountDownConfig(
               duration: widget.duration!,
             ),
@@ -136,6 +140,8 @@ class _SlideCountdownState extends State<SlideCountdown> {
             !(duration.inMinutes < 1 && !widget.showZeroValue);
         final defaultShowSeconds =
             !(duration.inSeconds < 1 && !widget.showZeroValue);
+        final defaultShowMilliseconds =
+            !(duration.inMilliseconds < 1 && !widget.showZeroValue);
 
         final showDays = widget.shouldShowDays != null
             ? widget.shouldShowDays!(duration)
@@ -149,6 +155,9 @@ class _SlideCountdownState extends State<SlideCountdown> {
         final showSeconds = widget.shouldShowSeconds != null
             ? widget.shouldShowSeconds!(duration)
             : defaultShowSeconds;
+        final showMilliseconds = widget.shouldShowMilliseconds != null
+            ? widget.shouldShowMilliseconds!(duration)
+            : defaultShowMilliseconds;
         final isSeparatorTitle = widget.separatorType == SeparatorType.title;
 
         final days = DigitItem(
@@ -228,7 +237,27 @@ class _SlideCountdownState extends State<SlideCountdown> {
           separatorPadding: widget.separatorPadding,
           textDirection: textDirection,
           digitsNumber: widget.digitsNumber,
-          showSeparator: isSeparatorTitle && showSeconds,
+          showSeparator: showMilliseconds || (isSeparatorTitle && showSeconds),
+          slideAnimationDuration: widget.slideAnimationDuration,
+          slideAnimationCurve: widget.slideAnimationCurve,
+        );
+
+        final milliseconds = DigitItem(
+          duration: duration,
+          timeUnit: TimeUnit.milliseconds,
+          padding: widget.padding,
+          decoration: widget.decoration,
+          style: widget.style,
+          separatorStyle: widget.separatorStyle,
+          slideDirection: widget.slideDirection,
+          countUp: widget.countUp,
+          separator: widget.separatorType == SeparatorType.title
+              ? durationTitle.milliseconds
+              : separator,
+          separatorPadding: widget.separatorPadding,
+          textDirection: textDirection,
+          digitsNumber: widget.digitsNumber,
+          showSeparator: isSeparatorTitle && showMilliseconds,
           slideAnimationDuration: widget.slideAnimationDuration,
           slideAnimationCurve: widget.slideAnimationCurve,
         );
@@ -241,6 +270,9 @@ class _SlideCountdownState extends State<SlideCountdown> {
 
         final secondsWidget = showSeconds ? seconds : const SizedBox.shrink();
 
+        final millisecondsWidget =
+            showMilliseconds ? milliseconds : const SizedBox.shrink();
+
         final countdown = Padding(
           padding: widget.padding,
           child: Row(
@@ -248,6 +280,7 @@ class _SlideCountdownState extends State<SlideCountdown> {
             children: textDirection.isRtl
                 ? [
                     suffixIcon,
+                    millisecondsWidget,
                     secondsWidget,
                     minutesWidget,
                     hoursWidget,
@@ -260,6 +293,7 @@ class _SlideCountdownState extends State<SlideCountdown> {
                     hoursWidget,
                     minutesWidget,
                     secondsWidget,
+                    millisecondsWidget,
                     suffixIcon,
                   ],
           ),

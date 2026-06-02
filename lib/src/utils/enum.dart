@@ -38,6 +38,9 @@ enum TimeUnit {
 
   /// Represents seconds as a unit of time.
   seconds,
+
+  /// Represents milliseconds as a unit of time.
+  milliseconds,
 }
 
 /// {@template digit_type}

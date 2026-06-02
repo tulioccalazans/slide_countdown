@@ -69,7 +69,11 @@ void main() {
       'id',
       () {
         const id = DurationTitle(
-            days: 'hari', hours: 'jam', minutes: 'menit', seconds: 'detik',);
+          days: 'hari',
+          hours: 'jam',
+          minutes: 'menit',
+          seconds: 'detik',
+        );
 
         expect(id == DurationTitle.id(), isTrue);
         expect(id.hashCode == DurationTitle.id().hashCode, isTrue);
@@ -90,10 +94,11 @@ void main() {
       'en',
       () {
         const en = DurationTitle(
-            days: 'days',
-            hours: 'hours',
-            minutes: 'minutes',
-            seconds: 'seconds',);
+          days: 'days',
+          hours: 'hours',
+          minutes: 'minutes',
+          seconds: 'seconds',
+        );
 
         expect(en == DurationTitle.en(), isTrue);
         expect(en.hashCode == DurationTitle.en().hashCode, isTrue);

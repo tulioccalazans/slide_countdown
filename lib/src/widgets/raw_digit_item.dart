@@ -104,10 +104,18 @@ class _RawDigitItemState extends State<RawDigitItem>
     setState(() {});
   }
 
-  int get maxDigit =>
-      widget.digitType == DigitType.first && widget.timeUnit != TimeUnit.days
-          ? 5
-          : 9;
+  int get maxDigit {
+    if (widget.digitType == DigitType.first &&
+        (widget.timeUnit == TimeUnit.minutes ||
+            widget.timeUnit == TimeUnit.seconds)) {
+      return 5;
+    }
+    if (widget.digitType == DigitType.first &&
+        widget.timeUnit == TimeUnit.hours) {
+      return 2;
+    }
+    return 9;
+  }
 
   int minMax(int value) {
     if (widget.countUp) {
@@ -269,6 +277,10 @@ class _RawDigitItemState extends State<RawDigitItem>
         value = (forceDuration ?? duration).secondsFirstDigit;
       case (TimeUnit.seconds, DigitType.second):
         value = (forceDuration ?? duration).secondsSecondDigit;
+      case (TimeUnit.milliseconds, DigitType.first):
+        value = (forceDuration ?? duration).millisecondsFirstDigit;
+      case (TimeUnit.milliseconds, DigitType.second):
+        value = (forceDuration ?? duration).millisecondsSecondDigit;
       default:
     }
 
@@ -280,16 +292,19 @@ class _RawDigitItemState extends State<RawDigitItem>
   bool get isWithoutAnimation => widget.slideDirection == SlideDirection.none;
 
   bool get currentAndNextIsSame {
+    final step = widget.timeUnit == TimeUnit.milliseconds
+        ? const Duration(milliseconds: 10)
+        : const Duration(seconds: 1);
     if (widget.countUp) {
       return digitValue() ==
           digitValue(
-            widget.duration + const Duration(seconds: 1),
+            widget.duration + step,
           );
     }
 
     return digitValue() ==
         digitValue(
-          widget.duration - const Duration(seconds: 1),
+          widget.duration - step,
         );
   }
 

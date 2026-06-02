@@ -40,7 +40,7 @@ Thanks to [pausable_timer](https://pub.dev/packages/pausable_timer), this packag
 
 ### Custom time unit
 Set the time unit you want to display with this params
-`shouldShowDays`, `shouldShowHours`, `shouldShowMinutes`, `shouldShowSeconds`.
+`shouldShowDays`, `shouldShowHours`, `shouldShowMinutes`, `shouldShowSeconds`, `shouldShowMilliseconds`.
 
 ```dart
   SlideCountdown(

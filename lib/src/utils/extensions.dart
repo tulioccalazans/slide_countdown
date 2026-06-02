@@ -81,4 +81,16 @@ extension DurationExtensions on Duration {
     if (inSeconds <= 0) return 0;
     return (inSeconds % 60) % 10;
   }
+
+  /// get the first digit from milliseconds
+  int get millisecondsFirstDigit {
+    if (inMilliseconds <= 0) return 0;
+    return (inMilliseconds % 1000) ~/ 100;
+  }
+
+  /// get the second digit from milliseconds
+  int get millisecondsSecondDigit {
+    if (inMilliseconds <= 0) return 0;
+    return (inMilliseconds % 100) ~/ 10;
+  }
 }

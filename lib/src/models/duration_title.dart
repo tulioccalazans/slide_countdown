@@ -18,6 +18,7 @@ class DurationTitle {
     required this.hours,
     required this.minutes,
     required this.seconds,
+    this.milliseconds = 'milliseconds',
   });
 
   /// @nodoc
@@ -26,6 +27,7 @@ class DurationTitle {
         hours: 'jam',
         minutes: 'menit',
         seconds: 'detik',
+        milliseconds: 'milidetik',
       );
 
   /// @nodoc
@@ -34,6 +36,7 @@ class DurationTitle {
         hours: 'j',
         minutes: 'm',
         seconds: 'd',
+        milliseconds: 'md',
       );
 
   /// @nodoc
@@ -42,6 +45,7 @@ class DurationTitle {
         hours: 'ώρες',
         minutes: 'λεπτά',
         seconds: 'δευτερόλεπτα',
+        milliseconds: 'χιλιοστά',
       );
 
   /// @nodoc
@@ -50,6 +54,7 @@ class DurationTitle {
         hours: 'ώ',
         minutes: 'λ',
         seconds: 'δ',
+        milliseconds: 'χ',
       );
 
   /// @nodoc
@@ -66,6 +71,7 @@ class DurationTitle {
         hours: 'h',
         minutes: 'm',
         seconds: 's',
+        milliseconds: 'ms',
       );
 
   /// @nodoc
@@ -74,6 +80,7 @@ class DurationTitle {
         hours: 'ժամ',
         minutes: 'րոպե',
         seconds: 'վարկյան',
+        milliseconds: 'միլիվայրկյան',
       );
 
   /// @nodoc
@@ -82,6 +89,7 @@ class DurationTitle {
         hours: 'ժ',
         minutes: 'ր',
         seconds: 'վ',
+        milliseconds: 'մվ',
       );
 
   /// @nodoc
@@ -90,6 +98,7 @@ class DurationTitle {
         hours: 'часов',
         minutes: 'минут',
         seconds: 'секунд',
+        milliseconds: 'миллисекунд',
       );
 
   /// @nodoc
@@ -98,6 +107,7 @@ class DurationTitle {
         hours: 'ч',
         minutes: 'м',
         seconds: 'с',
+        milliseconds: 'мс',
       );
 
   /// @nodoc
@@ -106,6 +116,7 @@ class DurationTitle {
         hours: 'ساعات',
         minutes: 'دقائق',
         seconds: 'ثواني',
+        milliseconds: 'أجزاء من الثانية',
       );
 
   /// @nodoc
@@ -114,6 +125,7 @@ class DurationTitle {
         hours: 'س',
         minutes: 'د',
         seconds: 'ث',
+        milliseconds: 'ج',
       );
 
   /// The title for days
@@ -128,6 +140,9 @@ class DurationTitle {
   /// The title for seconds
   final String seconds;
 
+  /// The title for milliseconds
+  final String milliseconds;
+
   /// The copyWith method creates a new instance of the `DurationTitle`
   /// class with any of the values modified, if specified.
   /// If a value is not specified, the existing value from the current
@@ -137,12 +152,14 @@ class DurationTitle {
     String? hours,
     String? minutes,
     String? seconds,
+    String? milliseconds,
   }) =>
       DurationTitle(
         days: days ?? this.days,
         hours: hours ?? this.hours,
         minutes: minutes ?? this.minutes,
         seconds: seconds ?? this.seconds,
+        milliseconds: milliseconds ?? this.milliseconds,
       );
 
   @override
@@ -152,11 +169,16 @@ class DurationTitle {
     return other.days == days &&
         other.hours == hours &&
         other.minutes == minutes &&
-        other.seconds == seconds;
+        other.seconds == seconds &&
+        other.milliseconds == milliseconds;
   }
 
   @override
   int get hashCode {
-    return days.hashCode ^ hours.hashCode ^ minutes.hashCode ^ seconds.hashCode;
+    return days.hashCode ^
+        hours.hashCode ^
+        minutes.hashCode ^
+        seconds.hashCode ^
+        milliseconds.hashCode;
   }
 }

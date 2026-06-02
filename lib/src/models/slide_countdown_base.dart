@@ -33,6 +33,7 @@ abstract class SlideCountdownBase extends StatefulWidget {
     required this.shouldShowHours,
     required this.shouldShowMinutes,
     required this.shouldShowSeconds,
+    required this.shouldShowMilliseconds,
     required this.countUpAtDuration,
     required this.slideAnimationDuration,
     required this.slideAnimationCurve,
@@ -156,6 +157,14 @@ abstract class SlideCountdownBase extends StatefulWidget {
   /// if null and [showZeroValue] is false
   /// when duration in seconds is zero it will return false
   final ShouldShowItems? shouldShowSeconds;
+
+  /// This will trigger the milliseconds item will show or hide
+  /// from the return value. You can also show or hide based on
+  /// the remaining duration
+  /// e.g shouldShowMilliseconds: (duration) => duration.inMilliseconds >= 1
+  /// if null and [showZeroValue] is false
+  /// when duration in milliseconds is zero it will return false
+  final ShouldShowItems? shouldShowMilliseconds;
 
   /// The duration of the slide animation.
   /// Defaults to 250 milliseconds.
